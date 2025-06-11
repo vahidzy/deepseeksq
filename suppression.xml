@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+    <!-- مثال: سرکوب کردن CVE خاص که false positive است -->
+    <!--
+    <suppress>
+        <notes><![CDATA[
+        This is a false positive for our use case
+        ]]></notes>
+        <packageUrl regex="true">^pkg:npm/.*$</packageUrl>
+        <cve>CVE-2021-44906</cve>
+    </suppress>
+    -->
+    
+    <!-- سرکوب کردن vulnerabilities مربوط به dev dependencies -->
+    <suppress>
+        <notes><![CDATA[
+        Development dependencies are not used in production
+        ]]></notes>
+        <packageUrl regex="true">^pkg:npm/(jest|@testing-library|eslint).*$</packageUrl>
+    </suppress>
+</suppressions>
