@@ -1,0 +1,27 @@
+{
+  "env": {
+    "node": true,
+    "es2021": true
+  },
+  "extends": ["eslint:recommended"],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["security"],
+  "rules": {
+    "no-console": "warn",
+    "security/detect-object-injection": "error",
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": [
+          {
+            "group": ["crypto"],
+            "message": "Use our secure crypto utilities instead of direct crypto imports"
+          }
+        ]
+      }
+    ]
+  }
+}
