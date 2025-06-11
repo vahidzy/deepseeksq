@@ -1,1 +1,1049 @@
-
+{
+  "project": {
+    "name": "Q1 Secure Platform",
+    "version": "3.0.0",
+    "type": "nextjs",
+    "securityLevel": "enterprise",
+    "multiLanguageSupport": true,
+    "supportedLanguages": ["en", "fa"],
+    "primaryLanguage": "en",
+    "defaultTheme": "dark",
+    "architecture": {
+      "frontend": "Next.js 14 App Router",
+      "backend": "Node.js + TypeScript",
+      "database": "Prisma + PostgreSQL",
+      "caching": "Redis",
+      "auth": "JWT + WebAuthn + OTP + Biometric",
+      "monitoring": "SIEM + ELK Stack"
+    },
+    "modules": {
+      "core": ["auth", "security", "i18n", "monitoring"],
+      "marketing": ["home", "solutions", "developers", "ecosystem", "community", "about"],
+      "dashboard": ["overview", "analytics", "notifications"],
+      "legal": ["terms", "privacy", "compliance"]
+    },
+    "colorPalette": {
+      "primary": "#1a365d",
+      "secondary": "#2c5282",
+      "accent": "#2b6cb0",
+      "teal": "#285e61",
+      "darkTeal": "#234e52",
+      "status": {
+        "danger": "#c53030",
+        "warning": "#dd6b20",
+        "success": "#38a169",
+        "info": "#3182ce"
+      },
+      "gray": {
+        "100": "#f7fafc",
+        "200": "#edf2f7",
+        "300": "#e2e8f0",
+        "400": "#cbd5e0",
+        "500": "#a0aec0",
+        "600": "#718096",
+        "700": "#4a5568",
+        "800": "#2d3748",
+        "900": "#1a202c"
+      },
+      "text": {
+        "primary": "#000000",
+        "secondary": "#2d3748",
+        "inverted": "#ffffff"
+      },
+      "dark": {
+        "background": "#0f172a",
+        "surface": "#1e293b",
+        "text": "#f8fafc",
+        "border": "#334155"
+      },
+      "light": {
+        "background": "#ffffff",
+        "surface": "#f1f5f9",
+        "text": "#0f172a",
+        "border": "#e2e8f0"
+      }
+    },
+    "pageStructure": {
+      "marketing": {
+        "home": {
+          "sections": ["hero", "features", "stats", "testimonials", "cta"],
+          "components": ["HeroSection", "FeatureGrid", "StatsCounter", "TestimonialCarousel", "NewsletterForm"]
+        },
+        "solutions": {
+          "sections": ["overview", "comparison", "pricing", "integrations"],
+          "components": ["SolutionCard", "ComparisonTable", "PricingTiers", "IntegrationBadges"]
+        },
+        "developers": {
+          "sections": ["docs", "api-reference", "sdk"],
+          "components": ["CodeSample", "ApiPlayground", "SdkDownload"]
+        },
+        "ecosystem": {
+          "sections": ["partners", "projects", "grants"],
+          "components": ["PartnerGrid", "ProjectShowcase", "GrantTimeline"]
+        },
+        "community": {
+          "sections": ["blog", "events", "forum"],
+          "components": ["BlogPost", "EventCalendar", "DiscussionThread"]
+        },
+        "about": {
+          "sections": ["team", "careers", "contact"],
+          "components": ["TeamGrid", "JobListing", "ContactForm"]
+        }
+      },
+      "auth": {
+        "login": {
+          "variants": ["email", "wallet", "social"],
+          "components": ["LoginForm", "AuthMethods", "SocialButtons"]
+        },
+        "register": {
+          "steps": ["account-type", "details", "verification"],
+          "components": ["RegistrationWizard", "VerificationInput"]
+        },
+        "recovery": {
+          "methods": ["email", "security-questions"],
+          "components": ["RecoveryForm", "BackupCodes"]
+        }
+      },
+      "dashboard": {
+        "overview": {
+          "widgets": ["balance", "activity", "alerts", "quick-actions"],
+          "components": ["StatsCard", "ActivityFeed", "AlertBanner"]
+        },
+        "analytics": {
+          "charts": ["volume", "transactions", "users"],
+          "components": ["LineChart", "BarChart", "DataTable"]
+        },
+        "settings": {
+          "sections": ["profile", "security", "notifications"],
+          "components": ["AvatarUpload", "TwoFactorSetup", "NotificationPreferences"]
+        }
+      },
+      "legal": {
+        "pages": ["terms", "privacy", "compliance"],
+        "components": ["DocumentViewer", "AcceptanceCheckbox"]
+      }
+    }
+  },
+  "componentStyles": {
+    "buttons": {
+      "primary": {
+        "backgroundColor": "$primary",
+        "color": "$text.inverted",
+        "hover": "$secondary"
+      },
+      "secondary": {
+        "backgroundColor": "$teal",
+        "color": "$text.inverted",
+        "hover": "$darkTeal"
+      },
+      "outline": {
+        "borderColor": "$gray.400",
+        "color": "$text.primary",
+        "hover": "$gray.100"
+      }
+    },
+    "cards": {
+      "default": {
+        "backgroundColor": "$gray.100",
+        "borderColor": "$gray.200",
+        "textColor": "$text.primary"
+      },
+      "dark": {
+        "backgroundColor": "$gray.800",
+        "borderColor": "$gray.700",
+        "textColor": "$text.inverted"
+      }
+    },
+    "forms": {
+      "input": {
+        "borderColor": "$gray.300",
+        "focusBorderColor": "$accent",
+        "errorBorderColor": "$status.danger"
+      },
+      "label": {
+        "color": "$text.secondary"
+      }
+    }
+  },
+  "security": {
+    "authentication": {
+      "jwt": {
+        "implementation": "stateless",
+        "rotation": true,
+        "shortLived": true,
+        "accessTokenTtl": 900,
+        "refreshTokenTtl": 604800,
+        "issuer": "q1-secure-platform",
+        "audience": ["web", "mobile", "api"],
+        "algorithms": ["RS256", "ES256"],
+        "keyRotation": "weekly"
+      },
+      "webauthn": {
+        "rpId": "yourdomain.com",
+        "rpName": "Q1 Secure Platform",
+        "timeout": 60000,
+        "attestation": "direct",
+        "userVerification": "required",
+        "authenticatorSelection": {
+          "authenticatorAttachment": "platform",
+          "requireResidentKey": true,
+          "userVerification": "required"
+        }
+      },
+      "biometric": {
+        "platforms": ["android", "ios", "web"],
+        "fallback": "otp",
+        "retryAttempts": 3,
+        "lockoutDuration": 300
+      },
+      "otp": {
+        "window": 2,
+        "step": 30,
+        "digits": 6,
+        "algorithm": "SHA256",
+        "issuer": "Q1 Secure Platform",
+        "backupCodes": {
+          "count": 10,
+          "length": 8,
+          "oneTimeUse": true
+        }
+      },
+      "sessionManagement": {
+        "inactivityTimeout": 1800,
+        "absoluteTimeout": 86400,
+        "concurrentSessions": false,
+        "deviceTracking": true,
+        "geoLocationValidation": true
+      }
+    },
+    "encryption": {
+      "atRest": {
+        "algorithm": "AES-256-GCM",
+        "keyRotation": "weekly",
+        "envelopeEncryption": true,
+        "keyDerivation": "PBKDF2"
+      },
+      "inTransit": {
+        "minTlsVersion": "TLSv1.3",
+        "ciphers": [
+          "TLS_AES_256_GCM_SHA384",
+          "TLS_CHACHA20_POLY1305_SHA256",
+          "TLS_AES_128_GCM_SHA256"
+        ],
+        "hsts": {
+          "maxAge": 63072000,
+          "includeSubDomains": true,
+          "preload": true
+        },
+        "certificatePinning": true
+      },
+      "keyManagement": {
+        "strategy": "hsm-backed",
+        "rotation": "quarterly",
+        "escrow": true,
+        "multiPartyControl": true
+      }
+    },
+    "headers": {
+      "csp": {
+        "mode": "strict-dynamic",
+        "nonce": true,
+        "reportOnly": false,
+        "reportUri": "/api/security/csp-report",
+        "violationCallback": true,
+        "directives": {
+          "default-src": "'none'",
+          "script-src": "'self' 'nonce-{NONCE}' 'strict-dynamic'",
+          "style-src": "'self' 'unsafe-inline'",
+          "img-src": "'self' data: https:",
+          "connect-src": "'self' wss: https:",
+          "font-src": "'self'",
+          "object-src": "'none'",
+          "media-src": "'self'",
+          "frame-src": "'none'",
+          "worker-src": "'self'",
+          "manifest-src": "'self'",
+          "base-uri": "'self'",
+          "form-action": "'self'"
+        }
+      },
+      "additional": {
+        "xFrameOptions": "DENY",
+        "xContentTypeOptions": "nosniff",
+        "xXssProtection": "0",
+        "referrerPolicy": "strict-origin-when-cross-origin",
+        "crossOriginEmbedderPolicy": "require-corp",
+        "crossOriginOpenerPolicy": "same-origin",
+        "crossOriginResourcePolicy": "same-origin",
+        "permissionsPolicy": {
+          "geolocation": "()",
+          "camera": "()",
+          "microphone": "()",
+          "payment": "()",
+          "usb": "()",
+          "bluetooth": "()"
+        }
+      }
+    },
+    "monitoring": {
+      "siem": {
+        "integrations": ["sentry", "elastic", "splunk"],
+        "logRetention": "90d",
+        "alertThresholds": {
+          "authFailures": 5,
+          "rateLimit": 100,
+          "suspiciousActivity": 10,
+          "dataExfiltration": 1
+        },
+        "correlationRules": [
+          "multiple-failed-logins",
+          "unusual-access-patterns",
+          "privilege-escalation"
+        ]
+      },
+      "intrusionDetection": {
+        "patterns": [
+          "sql-injection",
+          "xss",
+          "csrf",
+          "directory-traversal",
+          "command-injection",
+          "xxe"
+        ],
+        "response": "block",
+        "quarantine": true,
+        "forensics": true
+      },
+      "auditLogging": {
+        "sensitiveFields": [
+          "password",
+          "token",
+          "secret",
+          "privateKey",
+          "seed",
+          "mnemonic"
+        ],
+        "signing": true,
+        "immutable": true,
+        "retention": "7y",
+        "compliance": ["SOX", "GDPR", "PCI-DSS"]
+      },
+      "behaviorAnalytics": {
+        "userProfiling": true,
+        "anomalyDetection": true,
+        "riskScoring": true,
+        "adaptiveAuth": true
+      }
+    },
+    "clientProtection": {
+      "xss": {
+        "sanitize": true,
+        "dompurify": true,
+        "contentSecurityPolicy": true,
+        "trustedTypes": true
+      },
+      "csrf": {
+        "doubleSubmitCookie": true,
+        "samesite": "Strict",
+        "tokenValidation": true
+      },
+      "clickjacking": {
+        "frameBusting": true,
+        "xFrameOptions": true,
+        "csp": true
+      },
+      "sri": {
+        "enforce": true,
+        "hashAlgorithm": "sha384",
+        "crossorigin": "anonymous"
+      },
+      "trustedTypes": {
+        "enforce": true,
+        "policies": [
+          "htmlSanitization",
+          "scriptExecution",
+          "urlSanitization"
+        ]
+      },
+      "antiTampering": {
+        "codeObfuscation": true,
+        "integrityChecks": true,
+        "runtimeProtection": true
+      }
+    },
+    "compliance": {
+      "frameworks": ["SOC2", "ISO27001", "GDPR", "PCI-DSS"],
+      "dataClassification": {
+        "public": "green",
+        "internal": "yellow",
+        "confidential": "orange",
+        "restricted": "red"
+      },
+      "dataRetention": {
+        "logs": "7y",
+        "userData": "as-required",
+        "financialData": "10y"
+      }
+    }
+  },
+  "i18n": {
+    "strategy": "dynamic-ssr",
+    "namespaces": [
+      "common",
+      "auth",
+      "dashboard",
+      "security",
+      "marketing",
+      "legal",
+      "errors"
+    ],
+    "defaultNamespace": "common",
+    "loadPath": "/messages/{{lng}}/{{ns}}.json",
+    "saveMissing": false,
+    "missingKeyHandler": "warn",
+    "interpolation": {
+      "escapeValue": true,
+      "format": "security",
+      "maxReplaces": 1000
+    },
+    "react": {
+      "useSuspense": false,
+      "transSupportBasicHtmlNodes": true,
+      "transKeepBasicHtmlNodesFor": ["br", "strong", "i", "p", "span"]
+    },
+    "rtl": {
+      "languages": ["fa", "ar"],
+      "autoDetect": true
+    }
+  },
+  "api": {
+    "versioning": "uri",
+    "basePath": "/api/v1",
+    "endpoints": {
+      "auth": ["/login", "/register", "/refresh", "/logout"],
+      "dashboard": ["/analytics", "/notifications"],
+      "security": ["/audit-logs", "/sessions"]
+    },
+    "security": {
+      "requestValidation": true,
+      "responseValidation": true,
+      "signing": {
+        "algorithm": "HMAC-SHA256",
+        "header": "X-Signature",
+        "timestampWindow": 300,
+        "nonceValidation": true
+      },
+      "encryption": {
+        "request": "conditional",
+        "response": "required",
+        "algorithm": "AES-256-GCM",
+        "keyRotation": "daily"
+      },
+      "rateLimiting": {
+        "windowMs": 60000,
+        "max": 100,
+        "trustProxy": true,
+        "skipSuccessfulRequests": false,
+        "keyGenerator": "ip-user-endpoint"
+      },
+      "cors": {
+        "origin": ["https://yourdomain.com"],
+        "credentials": true,
+        "optionsSuccessStatus": 200
+      }
+    },
+    "errorHandling": {
+      "maskSensitive": true,
+      "genericMessages": true,
+      "logging": "structured",
+      "correlationId": true
+    }
+  },
+  "testing": {
+    "unit": {
+      "coverage": {
+        "threshold": 90,
+        "include": ["src/**/*.{ts,tsx}"],
+        "exclude": [
+          "**/__tests__/**",
+          "**/types/**",
+          "**/*.d.ts",
+          "**/node_modules/**"
+        ]
+      },
+      "frameworks": ["jest", "testing-library"]
+    },
+    "integration": {
+      "testDatabase": true,
+      "cleanup": true,
+      "fixtures": true,
+      "mocking": "minimal"
+    },
+    "e2e": {
+      "framework": "playwright",
+      "browsers": ["chromium", "firefox", "webkit"],
+      "headless": true,
+      "parallel": true
+    },
+    "security": {
+      "dependencyScan": "daily",
+      "sast": "on-commit",
+      "dast": "weekly",
+      "iast": "on-deploy",
+      "penetration": {
+        "scope": "full",
+        "frequency": "monthly",
+        "automated": true,
+        "manual": "quarterly"
+      },
+      "fuzzing": {
+        "api": true,
+        "ui": true,
+        "frequency": "weekly"
+      }
+    },
+    "tools": {
+      "jest": true,
+      "playwright": true,
+      "snyk": true,
+      "nodesecure": true,
+      "semgrep": true,
+      "codeql": true
+    }
+  },
+  "ciCd": {
+    "stages": [
+      "lint",
+      "type-check",
+      "unit-test",
+      "integration-test",
+      "security-scan",
+      "build",
+      "container-scan",
+      "deploy",
+      "smoke-test"
+    ],
+    "securityGates": {
+      "criticalVulnerabilities": 0,
+      "highVulnerabilities": 0,
+      "mediumVulnerabilities": 5,
+      "codeCoverage": 85,
+      "duplicateCode": 3
+    },
+    "containers": {
+      "scan": true,
+      "sign": true,
+      "user": "nonroot",
+      "readOnlyRootFilesystem": true,
+      "noNewPrivileges": true
+    },
+    "secrets": {
+      "scanner": "truffleHog",
+      "prevention": true,
+      "rotation": "on-detection"
+    }
+  },
+  "performance": {
+    "metrics": {
+      "fcp": 1.8,
+      "lcp": 2.5,
+      "fid": 100,
+      "cls": 0.1,
+      "ttfb": 600
+    },
+    "monitoring": {
+      "realUserMonitoring": true,
+      "syntheticMonitoring": true,
+      "alerting": true
+    },
+    "optimization": {
+      "caching": "aggressive",
+      "compression": "brotli",
+      "imageOptimization": true,
+      "codesplitting": "route-based"
+    }
+  },
+  "logging": {
+    "levels": {
+      "production": "warn",
+      "staging": "info",
+      "development": "debug"
+    },
+    "format": "json",
+    "transports": {
+      "console": {
+        "enabled": true,
+        "colorize": true
+      },
+      "file": {
+        "path": "/var/log/q1-secure",
+        "rotation": "daily",
+        "retention": "30d",
+        "maxSize": "100MB"
+      },
+      "remote": {
+        "endpoint": "https://logs.yourdomain.com",
+        "token": "${LOGGING_TOKEN}",
+        "batch": true,
+        "compression": true
+      }
+    },
+    "redaction": [
+      "password",
+      "token",
+      "authorization",
+      "cookie",
+      "creditCard",
+      "ssn",
+      "privateKey",
+      "seed",
+      "mnemonic"
+    ],
+    "correlation": {
+      "traceId": true,
+      "spanId": true,
+      "userId": true,
+      "sessionId": true
+    }
+  },
+  "build": {
+    "optimizations": {
+      "minify": true,
+      "treeShaking": true,
+      "codeSplitting": true,
+      "sri": true,
+      "compression": "gzip",
+      "imageOptimization": true
+    },
+    "analysis": {
+      "bundle": true,
+      "duplicates": true,
+      "circular": true,
+      "unused": true,
+      "performance": true
+    },
+    "sourceMaps": {
+      "production": false,
+      "staging": true,
+      "development": true
+    },
+    "cacheBusting": "contenthash",
+    "targets": {
+      "browsers": "> 0.5%, last 2 versions, not dead",
+      "node": "18"
+    }
+  },
+  "documentation": {
+    "security": {
+      "architecture": true,
+      "threatModel": true,
+      "apiSecurity": true,
+      "incidentResponse": true,
+      "compliance": true,
+      "runbooks": true
+    },
+    "api": {
+      "openapi": "3.1.0",
+      "format": "yaml",
+      "interactive": true,
+      "examples": true,
+      "securitySchemes": {
+        "jwt": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        },
+        "apiKey": {
+          "type": "apiKey",
+          "in": "header",
+          "name": "X-API-KEY"
+        }
+      }
+    },
+    "deployment": {
+      "infrastructure": true,
+      "monitoring": true,
+      "troubleshooting": true
+    }
+  },
+  "aiPrompts": {
+    "codeGeneration": {
+      "requirements": [
+        "secure-by-default",
+        "multi-language-support",
+        "type-safe",
+        "test-covered",
+        "documented",
+        "performance-optimized",
+        "accessibility-compliant"
+      ],
+      "constraints": [
+        "no-unsafe-eval",
+        "no-unsafe-inline",
+        "no-mixed-content",
+        "no-deprecated-apis",
+        "no-hardcoded-secrets",
+        "no-sql-injection-vectors"
+      ],
+      "patterns": [
+        "dependency-injection",
+        "factory-pattern",
+        "observer-pattern",
+        "strategy-pattern"
+      ]
+    },
+    "review": {
+      "focusAreas": [
+        "security-vulnerabilities",
+        "performance-bottlenecks",
+        "i18n-compliance",
+        "type-safety",
+        "best-practices",
+        "accessibility",
+        "maintainability"
+      ],
+      "outputFormat": "markdown",
+      "severity": ["critical", "high", "medium", "low", "info"]
+    },
+    "testing": {
+      "coverage": {
+        "unit": 90,
+        "integration": 80,
+        "e2e": 70,
+        "security": 100
+      },
+      "scenarios": [
+        "happy-path",
+        "error-conditions",
+        "edge-cases",
+        "security-attacks",
+        "performance-stress",
+        "accessibility-compliance"
+      ],
+      "dataGeneration": {
+        "realistic": true,
+        "edge-cases": true,
+        "security-focused": true
+      }
+    },
+    "pageGeneration": {
+      "requirements": [
+        "secure-by-design",
+        "responsive-layout",
+        "accessible-components",
+        "performance-optimized",
+        "multi-language-ready"
+      ],
+      "styleConstraints": {
+        "colors": ["primary", "teal", "gray"],
+        "textColors": ["black", "dark-gray"],
+        "spacing": "8px-grid",
+        "typography": "Inter-font-family"
+      },
+      "componentTemplates": {
+        "HeroSection": {
+          "requiredElements": ["heading", "subheading", "cta-button", "background"],
+          "styleRules": {
+            "textColor": "$text.inverted",
+            "background": "gradient($primary, $secondary)"
+          }
+        },
+        "DataTable": {
+          "requiredElements": ["header", "rows", "pagination", "sorting"],
+          "styleRules": {
+            "headerBackground": "$gray.200",
+            "rowAlternating": "$gray.100"
+          }
+        }
+      }
+    }
+  },
+  "generationRules": {
+    "meta": {
+      "version": "1.0.0",
+      "purpose": "Guidelines for AI-generated code implementation",
+      "compatibility": {
+        "requiredAssistantVersion": "1.5.0+",
+        "supportedFrameworks": ["Next.js 14+", "React 18+"]
+      }
+    },
+    "componentGeneration": {
+      "securityComponents": {
+        "AuthGuard": {
+          "implementation": {
+            "type": "wrapper",
+            "requiredProps": ["roles", "fallback"],
+            "defaultProps": {
+              "strictMode": true,
+              "loadingComponent": "SecuritySpinner"
+            },
+            "validationRules": {
+              "roles": {
+                "type": "array",
+                "allowedValues": ["guest", "user", "admin", "superadmin"]
+              }
+            }
+          },
+          "codeStyle": {
+            "pattern": "HOC",
+            "errorHandling": "context-based",
+            "logging": {
+              "level": "warn",
+              "sanitize": ["user.id", "token"]
+            }
+          }
+        },
+        "SecureInput": {
+          "implementation": {
+            "type": "controlled",
+            "securityFeatures": {
+              "autoSanitize": true,
+              "xssProtection": true,
+              "injectionPrevention": true
+            },
+            "accessibility": {
+              "required": ["aria-label", "aria-invalid"],
+              "recommended": ["aria-describedby"]
+            }
+          }
+        }
+      },
+      "layoutComponents": {
+        "DashboardLayout": {
+          "requiredSlots": ["sidebar", "header", "content", "footer"],
+          "persistentElements": ["sidebar", "header"],
+          "responsiveBreakpoints": {
+            "mobile": "<768px",
+            "tablet": "768px-1024px",
+            "desktop": ">1024px"
+          }
+        }
+      }
+    },
+    "pageGeneration": {
+      "templates": {
+        "marketingPage": {
+          "requiredSections": ["hero", "features", "testimonials", "cta"],
+          "seo": {
+            "requiredMeta": ["title", "description", "og:image"],
+            "semanticTags": ["header", "main", "footer"]
+          },
+          "performance": {
+            "lazyLoad": ["testimonials", "images"],
+            "preload": ["hero.css", "critical.js"]
+          }
+        },
+        "dashboardPage": {
+          "authentication": "required",
+          "dataFetching": {
+            "strategy": "server-side",
+            "caching": "swr",
+            "errorStates": ["loading", "empty", "error"]
+          },
+          "analytics": {
+            "trackEvents": ["page_view", "interaction"],
+            "privacy": "gdpr-compliant"
+          }
+        }
+      },
+      "styleRules": {
+        "spacing": {
+          "baseUnit": "8px",
+          "scale": [0, 0.5, 1, 1.5, 2, 3, 4, 5, 6]
+        },
+        "typography": {
+          "fontStack": "Inter, -apple-system, sans-serif",
+          "scale": {
+            "h1": "2.5rem",
+            "h2": "2rem",
+            "body": "1rem"
+          }
+        },
+        "colorApplication": {
+          "primary": ["buttons", "links", "active-states"],
+          "secondary": ["borders", "dividers"],
+          "accent": ["alerts", "badges"]
+        }
+      }
+    },
+    "codeQuality": {
+      "security": {
+        "requiredPatterns": [
+          "parameterized-queries",
+          "input-sanitization",
+          "output-encoding"
+        ],
+        "bannedPatterns": [
+          "eval",
+          "innerHTML",
+          "dangerouslySetInnerHTML"
+        ]
+      },
+      "performance": {
+        "budgets": {
+          "pageLoad": "3s",
+          "jsBundle": "150kb",
+          "cssBundle": "50kb"
+        },
+        "optimizations": {
+          "images": ["webp", "avif"],
+          "fonts": ["woff2", "subset"]
+        }
+      },
+      "accessibility": {
+        "wcag": "AA",
+        "requiredAttributes": ["alt", "aria-label"],
+        "keyboardNavigation": {
+          "focusOrder": "logical",
+          "traps": "none"
+        },
+        "contrastChecks": {
+          "text": 4.5,
+          "largeText": 3
+        }
+      }
+    },
+    "testing": {
+      "unit": {
+        "coverageThresholds": {
+          "statements": 90,
+          "branches": 80,
+          "functions": 85,
+          "lines": 90
+        },
+        "requiredTests": [
+          "prop-validation",
+          "error-states",
+          "edge-cases"
+        ]
+      },
+      "integration": {
+        "scenarios": [
+          "happy-path",
+          "error-recovery",
+          "permission-testing"
+        ]
+      },
+      "e2e": {
+        "criticalFlows": [
+          "user-registration",
+          "login-logout",
+          "profile-update"
+        ]
+      }
+    },
+    "documentation": {
+      "componentDocs": {
+        "requiredSections": ["props", "usage", "examples"],
+        "format": "MDX",
+        "liveExamples": true
+      },
+      "apiDocs": {
+        "spec": "OpenAPI 3.1",
+        "requiredSections": ["parameters", "responses", "errors"]
+      }
+    },
+    "generationPreferences": {
+      "codeStyle": {
+        "indentation": 2,
+        "semicolons": false,
+        "quoteStyle": "single",
+        "trailingComma": "es5"
+      },
+      "namingConventions": {
+        "components": "PascalCase",
+        "variables": "camelCase",
+        "constants": "UPPER_CASE"
+      },
+      "fileStructure": {
+        "components": "src/components/{category}/{name}.tsx",
+        "pages": "app/{route}/page.tsx",
+        "styles": "src/styles/modules/{name}.module.css"
+      }
+    },
+    "compliance": {
+      "privacy": {
+        "dataCollection": ["opt-in", "cookie-consent"],
+        "tracking": ["anonymize-ip", "disable-third-party"]
+      },
+      "security": {
+        "headers": ["CSP", "HSTS", "X-Frame-Options"],
+        "cryptography": ["TLS1.3", "AES256-GCM"]
+      }
+    },
+    "reviewProcess": {
+      "automatedChecks": [
+        "eslint-security",
+        "type-checking",
+        "a11y-scan"
+      ],
+      "humanReview": {
+        "requiredFor": ["auth-flows", "payment-processing"],
+        "checklist": [
+          "security-audit",
+          "design-consistency",
+          "performance-metrics"
+        ]
+      }
+    }
+  },
+  "implementationGuidelines": {
+    "authentication": {
+      "jwt": "Use asymmetric keys (RS256/ES256), store in HSM, implement proper rotation",
+      "sessions": "Implement idle and absolute timeouts, secure cookie attributes, device tracking",
+      "passwordless": "Prioritize WebAuthn and biometric auth, implement graceful fallbacks",
+      "mfa": "Enforce for all privileged operations, support multiple factors"
+    },
+    "dataProtection": {
+      "encryption": "Encrypt all PII at rest and in transit, use envelope encryption with HSM",
+      "sanitization": "Always sanitize before rendering, use trusted types and CSP",
+      "classification": "Implement data classification and handling procedures"
+    },
+    "errorHandling": {
+      "client": "Generic error messages, implement proper error boundaries",
+      "server": "Structured logging with correlation IDs, redact sensitive data",
+      "monitoring": "Real-time alerting on error patterns and anomalies"
+    },
+    "i18n": {
+      "implementation": "Server-side rendering with dynamic loading, RTL support",
+      "fallback": "English as default with graceful degradation",
+      "security": "Sanitize all translated content, validate interpolations"
+    },
+    "performance": {
+      "caching": "Implement multi-layer caching strategy with proper invalidation",
+      "optimization": "Code splitting, lazy loading, image optimization",
+      "monitoring": "Real-time performance monitoring with alerting"
+    }
+  },
+  "deployment": {
+    "environments": {
+      "development": {
+        "domain": "dev.q1secure.local",
+        "database": "postgresql://localhost:5432/q1secure_dev",
+        "redis": "redis://localhost:6379/0"
+      },
+      "staging": {
+        "domain": "staging.q1secure.com",
+        "database": "${STAGING_DATABASE_URL}",
+        "redis": "${STAGING_REDIS_URL}"
+      },
+      "production": {
+        "domain": "q1secure.com",
+        "database": "${PRODUCTION_DATABASE_URL}",
+        "redis": "${PRODUCTION_REDIS_URL}"
+      }
+    },
+    "infrastructure": {
+      "containerization": "Docker with multi-stage builds",
+      "orchestration": "Kubernetes with security policies",
+      "networking": "Service mesh with mTLS",
+      "storage": "Encrypted persistent volumes"
+    },
+    "monitoring": {
+      "apm": "Datadog/New Relic",
+      "logs": "ELK Stack",
+      "metrics": "Prometheus + Grafana",
+      "alerts": "PagerDuty integration"
+    }
+  }
+}
